@@ -42,7 +42,6 @@ DIST_COMMON = $(srcdir)/../Make.vars $(srcdir)/Makefile.am \
 #AM_CPPFLAGS += -D_GLIBCXX_CONCEPT_CHECKS=1
 @NDEBUG_FALSE@am__append_3 = -D_GLIBCXX_DEBUG=1 \
 @NDEBUG_FALSE@	-D_GLIBCXX_DEBUG_PEDANTIC=1
-@NDEBUG_FALSE@am__append_4 = -export-dynamic
 subdir = src/lib
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_boost_base.m4 \
@@ -65,7 +64,7 @@ ARFLAGS = cru
 libgateway_a_AR = $(AR) $(ARFLAGS)
 libgateway_a_LIBADD =
 am_libgateway_a_OBJECTS = string.$(OBJEXT) timeval.$(OBJEXT) \
-	vlog.$(OBJEXT) util.$(OBJEXT)
+	vlog.$(OBJEXT) util.$(OBJEXT) configuration.$(OBJEXT)
 libgateway_a_OBJECTS = $(am_libgateway_a_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
@@ -209,12 +208,18 @@ COMMON_FLAGS = -fno-omit-frame-pointer -fno-strict-aliasing -Wall \
 AM_CXXFLAGS = $(COMMON_FLAGS)
 AM_CFLAGS = $(COMMON_FLAGS) -Wstrict-prototypes -Wmissing-prototypes
 LDADD = 
-AM_LDFLAGS = -R$(pkglibdir) $(am__append_4) $(BOOST_LDFLAGS)
+
+# AM_LDFLAGS = -R$(pkglibdir)
+# if !NDEBUG
+# AM_LDFLAGS += -export-dynamic
+# endif
+AM_LDFLAGS = $(BOOST_LDFLAGS)
 noinst_LIBRARIES = libgateway.a
-libgateway_a_SOURCES = string.cc    \
-					   timeval.cc   \
-					   vlog.cc      \
-					   util.cc
+libgateway_a_SOURCES = string.cc         \
+					   timeval.cc        \
+					   vlog.cc           \
+					   util.cc           \
+					   configuration.cc
 
 all: all-am
 
@@ -265,6 +270,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/configuration.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/string.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/timeval.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/util.Po@am__quote@

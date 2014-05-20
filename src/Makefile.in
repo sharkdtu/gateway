@@ -42,7 +42,6 @@ DIST_COMMON = $(srcdir)/Make.vars $(srcdir)/Makefile.am \
 #AM_CPPFLAGS += -D_GLIBCXX_CONCEPT_CHECKS=1
 @NDEBUG_FALSE@am__append_3 = -D_GLIBCXX_DEBUG=1 \
 @NDEBUG_FALSE@	-D_GLIBCXX_DEBUG_PEDANTIC=1
-@NDEBUG_FALSE@am__append_4 = -export-dynamic
 bin_PROGRAMS = gateway$(EXEEXT)
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -67,7 +66,10 @@ am_gateway_OBJECTS = gateway-gateway.$(OBJEXT) \
 gateway_OBJECTS = $(am_gateway_OBJECTS)
 am__DEPENDENCIES_1 =
 gateway_DEPENDENCIES = $(am__DEPENDENCIES_1) \
-	$(builddir)/lib/libgateway.a
+	$(builddir)/lib/libgateway.a $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
+gateway_LINK = $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(gateway_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__depfiles_maybe = depfiles
@@ -252,7 +254,12 @@ COMMON_FLAGS = -fno-omit-frame-pointer -fno-strict-aliasing -Wall \
 AM_CXXFLAGS = $(COMMON_FLAGS)
 AM_CFLAGS = $(COMMON_FLAGS) -Wstrict-prototypes -Wmissing-prototypes
 LDADD = 
-AM_LDFLAGS = -R$(pkglibdir) $(am__append_4) $(BOOST_LDFLAGS)
+
+# AM_LDFLAGS = -R$(pkglibdir)
+# if !NDEBUG
+# AM_LDFLAGS += -export-dynamic
+# endif
+AM_LDFLAGS = $(BOOST_LDFLAGS)
 ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = include lib
 gateway_SOURCES = include/gateway.hh   \
@@ -260,8 +267,12 @@ gateway_SOURCES = include/gateway.hh   \
                   gateway_main.cc
 
 gateway_CPPFLAGS = $(AM_CPPFLAGS)
+gateway_LDFLAGS = $(AM_LDFLAGS)
 gateway_LDADD = $(LDADD)                     \
-                $(builddir)/lib/libgateway.a 
+                $(builddir)/lib/libgateway.a \
+				$(BOOST_THREAD_LIB)          \
+				$(BOOST_FILESYSTEM_LIB)      \
+				$(BOOST_SYSTEM_LIB)          
 
 all: all-recursive
 
@@ -337,7 +348,7 @@ clean-binPROGRAMS:
 	-test -z "$(bin_PROGRAMS)" || rm -f $(bin_PROGRAMS)
 gateway$(EXEEXT): $(gateway_OBJECTS) $(gateway_DEPENDENCIES) $(EXTRA_gateway_DEPENDENCIES) 
 	@rm -f gateway$(EXEEXT)
-	$(CXXLINK) $(gateway_OBJECTS) $(gateway_LDADD) $(LIBS)
+	$(gateway_LINK) $(gateway_OBJECTS) $(gateway_LDADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

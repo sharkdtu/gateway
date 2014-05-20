@@ -12,6 +12,11 @@ gateway_SOURCES = include/gateway.hh   \
 
 gateway_CPPFLAGS = $(AM_CPPFLAGS)
 
+gateway_LDFLAGS = $(AM_LDFLAGS)
+
 gateway_LDADD = $(LDADD)                     \
-                $(builddir)/lib/libgateway.a 
+                $(builddir)/lib/libgateway.a \
+				$(BOOST_THREAD_LIB)          \
+				$(BOOST_FILESYSTEM_LIB)      \
+				$(BOOST_SYSTEM_LIB)          
 

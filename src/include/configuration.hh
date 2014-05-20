@@ -3,12 +3,8 @@
 
 #include <string>
 #include <utility>
-#include <stdexcept>
 
 #include <boost/noncopyable.hpp>
-#include <boost/filesystem.hpp>
-#include <boost/foreach.hpp>
-#include <boost/property_tree/xml_parser.hpp>
 
 #include "hash_map.hh"
 
@@ -69,37 +65,6 @@ private:
 	hash_map<std::string, std::string> peer_to_planetlab;
 	int timeout;//unit(s)
 };
-
-void Configuration::init()
-{
-	namespace fs = boost::filesystem;
-	namespace pt = boost::property_tree;
-	
-	fs::path p = fs::path(CONF_FILE);
-	if(fs::exists(p))
-	{
-		pt::ptree root;
-		pt::read_xml(CONF_FILE, root);
-		timeout = root.get<int>("gateway.timeout");
-		pt::ptree addr_groups = root.get_child("gateway.addr_groups");
-		BOOST_FOREACH(pt::ptree::value_type& v, addr_groups)
-		{
-			std::string peer_ip = v.second.get<std::string>("peer_ip");
-			std::string local_ip = v.second.get<std::string>("local_ip");
-			std::string planetlab_ip = v.second.get<std::string>("planetlab_ip");
-			std::string interface = v.second.get<std::string>("interface");
-			std::string peer_mac = v.second.get<std::string>("peer_mac");
-			peer_to_planetlab[peer_ip] = planetlab_ip;
-			peer_to_eth[peer_ip] = std::make_pair(interface, peer_mac);
-		}
-	}
-	else
-	{
-		throw std::runtime_error("Can not find " + CONF_FILE);
-	}
-}
-
-Configuration* Configuration::theobject = new Configuration;
 
 } //namespace rusv
 

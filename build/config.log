@@ -42,12 +42,637 @@ PATH: /usr/games
 ## Core tests. ##
 ## ----------- ##
 
-configure:2294: error: cannot find install-sh, install.sh, or shtool in build-aux ".."/build-aux
+configure:2351: checking for ranlib
+configure:2367: found /usr/bin/ranlib
+configure:2378: result: ranlib
+configure:2417: checking for a BSD-compatible install
+configure:2485: result: /usr/bin/install -c
+configure:2496: checking whether build environment is sane
+configure:2546: result: yes
+configure:2687: checking for a thread-safe mkdir -p
+configure:2726: result: /bin/mkdir -p
+configure:2739: checking for gawk
+configure:2755: found /usr/bin/gawk
+configure:2766: result: gawk
+configure:2777: checking whether make sets $(MAKE)
+configure:2799: result: yes
+configure:2940: checking for g++
+configure:2956: found /usr/bin/g++
+configure:2967: result: g++
+configure:2994: checking for C++ compiler version
+configure:3003: g++ --version >&5
+g++ (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
+Copyright (C) 2011 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+configure:3014: $? = 0
+configure:3003: g++ -v >&5
+Using built-in specs.
+COLLECT_GCC=g++
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/i686-linux-gnu/4.6/lto-wrapper
+Target: i686-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Ubuntu/Linaro 4.6.3-1ubuntu5' --with-bugurl=file:///usr/share/doc/gcc-4.6/README.Bugs --enable-languages=c,c++,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-4.6 --enable-shared --enable-linker-build-id --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.6 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-gnu-unique-object --enable-plugin --enable-objc-gc --enable-targets=all --disable-werror --with-arch-32=i686 --with-tune=generic --enable-checking=release --build=i686-linux-gnu --host=i686-linux-gnu --target=i686-linux-gnu
+Thread model: posix
+gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
+configure:3014: $? = 0
+configure:3003: g++ -V >&5
+g++: error: unrecognized option '-V'
+g++: fatal error: no input files
+compilation terminated.
+configure:3014: $? = 4
+configure:3003: g++ -qversion >&5
+g++: error: unrecognized option '-qversion'
+g++: fatal error: no input files
+compilation terminated.
+configure:3014: $? = 4
+configure:3034: checking whether the C++ compiler works
+configure:3056: g++    conftest.cpp  >&5
+configure:3060: $? = 0
+configure:3108: result: yes
+configure:3111: checking for C++ compiler default output file name
+configure:3113: result: a.out
+configure:3119: checking for suffix of executables
+configure:3126: g++ -o conftest    conftest.cpp  >&5
+configure:3130: $? = 0
+configure:3152: result: 
+configure:3174: checking whether we are cross compiling
+configure:3182: g++ -o conftest    conftest.cpp  >&5
+configure:3186: $? = 0
+configure:3193: ./conftest
+configure:3197: $? = 0
+configure:3212: result: no
+configure:3217: checking for suffix of object files
+configure:3239: g++ -c   conftest.cpp >&5
+configure:3243: $? = 0
+configure:3264: result: o
+configure:3268: checking whether we are using the GNU C++ compiler
+configure:3287: g++ -c   conftest.cpp >&5
+configure:3287: $? = 0
+configure:3296: result: yes
+configure:3305: checking whether g++ accepts -g
+configure:3325: g++ -c -g  conftest.cpp >&5
+configure:3325: $? = 0
+configure:3366: result: yes
+configure:3400: checking for style of include used by make
+configure:3428: result: GNU
+configure:3454: checking dependency style of g++
+configure:3565: result: gcc3
+configure:3628: checking for gcc
+configure:3644: found /usr/bin/gcc
+configure:3655: result: gcc
+configure:3884: checking for C compiler version
+configure:3893: gcc --version >&5
+gcc (Ubuntu/Linaro 4.6.3-1ubuntu5) 4.6.3
+Copyright (C) 2011 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+configure:3904: $? = 0
+configure:3893: gcc -v >&5
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/i686-linux-gnu/4.6/lto-wrapper
+Target: i686-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Ubuntu/Linaro 4.6.3-1ubuntu5' --with-bugurl=file:///usr/share/doc/gcc-4.6/README.Bugs --enable-languages=c,c++,fortran,objc,obj-c++ --prefix=/usr --program-suffix=-4.6 --enable-shared --enable-linker-build-id --with-system-zlib --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --with-gxx-include-dir=/usr/include/c++/4.6 --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --enable-gnu-unique-object --enable-plugin --enable-objc-gc --enable-targets=all --disable-werror --with-arch-32=i686 --with-tune=generic --enable-checking=release --build=i686-linux-gnu --host=i686-linux-gnu --target=i686-linux-gnu
+Thread model: posix
+gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) 
+configure:3904: $? = 0
+configure:3893: gcc -V >&5
+gcc: error: unrecognized option '-V'
+gcc: fatal error: no input files
+compilation terminated.
+configure:3904: $? = 4
+configure:3893: gcc -qversion >&5
+gcc: error: unrecognized option '-qversion'
+gcc: fatal error: no input files
+compilation terminated.
+configure:3904: $? = 4
+configure:3908: checking whether we are using the GNU C compiler
+configure:3927: gcc -c   conftest.c >&5
+configure:3927: $? = 0
+configure:3936: result: yes
+configure:3945: checking whether gcc accepts -g
+configure:3965: gcc -c -g  conftest.c >&5
+configure:3965: $? = 0
+configure:4006: result: yes
+configure:4023: checking for gcc option to accept ISO C89
+configure:4087: gcc  -c -g -O2  conftest.c >&5
+configure:4087: $? = 0
+configure:4100: result: none needed
+configure:4122: checking dependency style of gcc
+configure:4233: result: gcc3
+configure:4253: checking how to run the C preprocessor
+configure:4284: gcc -E  conftest.c
+configure:4284: $? = 0
+configure:4298: gcc -E  conftest.c
+conftest.c:11:28: fatal error: ac_nonexistent.h: No such file or directory
+compilation terminated.
+configure:4298: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "gateway"
+| #define PACKAGE_TARNAME "gateway"
+| #define PACKAGE_VERSION "1.0"
+| #define PACKAGE_STRING "gateway 1.0"
+| #define PACKAGE_BUGREPORT "txgbuaa@gmail.com"
+| #define PACKAGE_URL ""
+| #define PACKAGE "gateway"
+| #define VERSION "1.0"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:4323: result: gcc -E
+configure:4343: gcc -E  conftest.c
+configure:4343: $? = 0
+configure:4357: gcc -E  conftest.c
+conftest.c:11:28: fatal error: ac_nonexistent.h: No such file or directory
+compilation terminated.
+configure:4357: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "gateway"
+| #define PACKAGE_TARNAME "gateway"
+| #define PACKAGE_VERSION "1.0"
+| #define PACKAGE_STRING "gateway 1.0"
+| #define PACKAGE_BUGREPORT "txgbuaa@gmail.com"
+| #define PACKAGE_URL ""
+| #define PACKAGE "gateway"
+| #define VERSION "1.0"
+| /* end confdefs.h.  */
+| #include <ac_nonexistent.h>
+configure:4388: checking if g++ supports C++0x features without additional flags
+configure:4425: g++ -c -g -O2  conftest.cpp >&5
+conftest.cpp:15:21: error: expected identifier before 'sizeof'
+conftest.cpp:15:21: error: expected ',' or '...' before 'sizeof'
+conftest.cpp:15:63: error: ISO C++ forbids declaration of 'static_assert' with no type [-fpermissive]
+conftest.cpp:18:29: error: '>>' should be '> >' within a nested template argument list
+conftest.cpp:21:13: error: expected constructor, destructor, or type conversion before '(' token
+conftest.cpp:25:15: error: expected unqualified-id before '&&' token
+configure:4425: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "gateway"
+| #define PACKAGE_TARNAME "gateway"
+| #define PACKAGE_VERSION "1.0"
+| #define PACKAGE_STRING "gateway 1.0"
+| #define PACKAGE_BUGREPORT "txgbuaa@gmail.com"
+| #define PACKAGE_URL ""
+| #define PACKAGE "gateway"
+| #define VERSION "1.0"
+| /* end confdefs.h.  */
+| 
+|   template <typename T>
+|     struct check
+|     {
+|       static_assert(sizeof(int) <= sizeof(T), "not big enough");
+|     };
+| 
+|     typedef check<check<bool>> right_angle_brackets;
+| 
+|     int a;
+|     decltype(a) b;
+| 
+|     typedef check<int> check_type;
+|     check_type c;
+|     check_type&& cr = static_cast<check_type&&>(c);
+| int
+| main ()
+| {
+| 
+|   ;
+|   return 0;
+| }
+configure:4439: result: no
+configure:4442: checking if g++ supports C++0x features with -std=c++0x
+configure:4481: g++ -c -g -O2 -std=c++0x  conftest.cpp >&5
+configure:4481: $? = 0
+configure:4496: result: yes
+configure:4499: checking if g++ supports C++0x features with -std=gnu++0x
+configure:4538: g++ -c -g -O2 -std=gnu++0x  conftest.cpp >&5
+configure:4538: $? = 0
+configure:4553: result: yes
+configure:4579: checking for grep that handles long lines and -e
+configure:4637: result: /bin/grep
+configure:4642: checking for egrep
+configure:4704: result: /bin/grep -E
+configure:4709: checking for ANSI C header files
+configure:4729: gcc -c -g -O2  conftest.c >&5
+configure:4729: $? = 0
+configure:4802: gcc -o conftest -g -O2   conftest.c  >&5
+configure:4802: $? = 0
+configure:4802: ./conftest
+configure:4802: $? = 0
+configure:4813: result: yes
+configure:4826: checking for sys/types.h
+configure:4826: gcc -c -g -O2  conftest.c >&5
+configure:4826: $? = 0
+configure:4826: result: yes
+configure:4826: checking for sys/stat.h
+configure:4826: gcc -c -g -O2  conftest.c >&5
+configure:4826: $? = 0
+configure:4826: result: yes
+configure:4826: checking for stdlib.h
+configure:4826: gcc -c -g -O2  conftest.c >&5
+configure:4826: $? = 0
+configure:4826: result: yes
+configure:4826: checking for string.h
+configure:4826: gcc -c -g -O2  conftest.c >&5
+configure:4826: $? = 0
+configure:4826: result: yes
+configure:4826: checking for memory.h
+configure:4826: gcc -c -g -O2  conftest.c >&5
+configure:4826: $? = 0
+configure:4826: result: yes
+configure:4826: checking for strings.h
+configure:4826: gcc -c -g -O2  conftest.c >&5
+configure:4826: $? = 0
+configure:4826: result: yes
+configure:4826: checking for inttypes.h
+configure:4826: gcc -c -g -O2  conftest.c >&5
+configure:4826: $? = 0
+configure:4826: result: yes
+configure:4826: checking for stdint.h
+configure:4826: gcc -c -g -O2  conftest.c >&5
+configure:4826: $? = 0
+configure:4826: result: yes
+configure:4826: checking for unistd.h
+configure:4826: gcc -c -g -O2  conftest.c >&5
+configure:4826: $? = 0
+configure:4826: result: yes
+configure:4841: checking arpa/inet.h usability
+configure:4841: gcc -c -g -O2  conftest.c >&5
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking arpa/inet.h presence
+configure:4841: gcc -E  conftest.c
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking for arpa/inet.h
+configure:4841: result: yes
+configure:4841: checking limits.h usability
+configure:4841: gcc -c -g -O2  conftest.c >&5
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking limits.h presence
+configure:4841: gcc -E  conftest.c
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking for limits.h
+configure:4841: result: yes
+configure:4841: checking netdb.h usability
+configure:4841: gcc -c -g -O2  conftest.c >&5
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking netdb.h presence
+configure:4841: gcc -E  conftest.c
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking for netdb.h
+configure:4841: result: yes
+configure:4841: checking netinet/in.h usability
+configure:4841: gcc -c -g -O2  conftest.c >&5
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking netinet/in.h presence
+configure:4841: gcc -E  conftest.c
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking for netinet/in.h
+configure:4841: result: yes
+configure:4841: checking for stdint.h
+configure:4841: result: yes
+configure:4841: checking for stdlib.h
+configure:4841: result: yes
+configure:4841: checking for string.h
+configure:4841: result: yes
+configure:4841: checking sys/ioctl.h usability
+configure:4841: gcc -c -g -O2  conftest.c >&5
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking sys/ioctl.h presence
+configure:4841: gcc -E  conftest.c
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking for sys/ioctl.h
+configure:4841: result: yes
+configure:4841: checking sys/socket.h usability
+configure:4841: gcc -c -g -O2  conftest.c >&5
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking sys/socket.h presence
+configure:4841: gcc -E  conftest.c
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking for sys/socket.h
+configure:4841: result: yes
+configure:4841: checking sys/time.h usability
+configure:4841: gcc -c -g -O2  conftest.c >&5
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking sys/time.h presence
+configure:4841: gcc -E  conftest.c
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking for sys/time.h
+configure:4841: result: yes
+configure:4841: checking syslog.h usability
+configure:4841: gcc -c -g -O2  conftest.c >&5
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking syslog.h presence
+configure:4841: gcc -E  conftest.c
+configure:4841: $? = 0
+configure:4841: result: yes
+configure:4841: checking for syslog.h
+configure:4841: result: yes
+configure:4841: checking for unistd.h
+configure:4841: result: yes
+configure:4853: checking for stdbool.h that conforms to C99
+configure:4920: gcc -c -g -O2  conftest.c >&5
+configure:4920: $? = 0
+configure:4927: result: yes
+configure:4929: checking for _Bool
+configure:4929: gcc -c -g -O2  conftest.c >&5
+configure:4929: $? = 0
+configure:4929: gcc -c -g -O2  conftest.c >&5
+conftest.c: In function 'main':
+conftest.c:70:20: error: expected expression before ')' token
+configure:4929: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "gateway"
+| #define PACKAGE_TARNAME "gateway"
+| #define PACKAGE_VERSION "1.0"
+| #define PACKAGE_STRING "gateway 1.0"
+| #define PACKAGE_BUGREPORT "txgbuaa@gmail.com"
+| #define PACKAGE_URL ""
+| #define PACKAGE "gateway"
+| #define VERSION "1.0"
+| #define HAVE_STDCXX_0X /**/
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_ARPA_INET_H 1
+| #define HAVE_LIMITS_H 1
+| #define HAVE_NETDB_H 1
+| #define HAVE_NETINET_IN_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_SYS_IOCTL_H 1
+| #define HAVE_SYS_SOCKET_H 1
+| #define HAVE_SYS_TIME_H 1
+| #define HAVE_SYSLOG_H 1
+| #define HAVE_UNISTD_H 1
+| /* end confdefs.h.  */
+| #include <stdio.h>
+| #ifdef HAVE_SYS_TYPES_H
+| # include <sys/types.h>
+| #endif
+| #ifdef HAVE_SYS_STAT_H
+| # include <sys/stat.h>
+| #endif
+| #ifdef STDC_HEADERS
+| # include <stdlib.h>
+| # include <stddef.h>
+| #else
+| # ifdef HAVE_STDLIB_H
+| #  include <stdlib.h>
+| # endif
+| #endif
+| #ifdef HAVE_STRING_H
+| # if !defined STDC_HEADERS && defined HAVE_MEMORY_H
+| #  include <memory.h>
+| # endif
+| # include <string.h>
+| #endif
+| #ifdef HAVE_STRINGS_H
+| # include <strings.h>
+| #endif
+| #ifdef HAVE_INTTYPES_H
+| # include <inttypes.h>
+| #endif
+| #ifdef HAVE_STDINT_H
+| # include <stdint.h>
+| #endif
+| #ifdef HAVE_UNISTD_H
+| # include <unistd.h>
+| #endif
+| int
+| main ()
+| {
+| if (sizeof ((_Bool)))
+| 	    return 0;
+|   ;
+|   return 0;
+| }
+configure:4929: result: yes
+configure:4945: checking for inline
+configure:4961: gcc -c -g -O2  conftest.c >&5
+configure:4961: $? = 0
+configure:4969: result: inline
+configure:4987: checking for size_t
+configure:4987: gcc -c -g -O2  conftest.c >&5
+configure:4987: $? = 0
+configure:4987: gcc -c -g -O2  conftest.c >&5
+conftest.c: In function 'main':
+conftest.c:72:21: error: expected expression before ')' token
+configure:4987: $? = 1
+configure: failed program was:
+| /* confdefs.h */
+| #define PACKAGE_NAME "gateway"
+| #define PACKAGE_TARNAME "gateway"
+| #define PACKAGE_VERSION "1.0"
+| #define PACKAGE_STRING "gateway 1.0"
+| #define PACKAGE_BUGREPORT "txgbuaa@gmail.com"
+| #define PACKAGE_URL ""
+| #define PACKAGE "gateway"
+| #define VERSION "1.0"
+| #define HAVE_STDCXX_0X /**/
+| #define STDC_HEADERS 1
+| #define HAVE_SYS_TYPES_H 1
+| #define HAVE_SYS_STAT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_MEMORY_H 1
+| #define HAVE_STRINGS_H 1
+| #define HAVE_INTTYPES_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE_ARPA_INET_H 1
+| #define HAVE_LIMITS_H 1
+| #define HAVE_NETDB_H 1
+| #define HAVE_NETINET_IN_H 1
+| #define HAVE_STDINT_H 1
+| #define HAVE_STDLIB_H 1
+| #define HAVE_STRING_H 1
+| #define HAVE_SYS_IOCTL_H 1
+| #define HAVE_SYS_SOCKET_H 1
+| #define HAVE_SYS_TIME_H 1
+| #define HAVE_SYSLOG_H 1
+| #define HAVE_UNISTD_H 1
+| #define HAVE__BOOL 1
+| #define HAVE_STDBOOL_H 1
+| /* end confdefs.h.  */
+| #include <stdio.h>
+| #ifdef HAVE_SYS_TYPES_H
+| # include <sys/types.h>
+| #endif
+| #ifdef HAVE_SYS_STAT_H
+| # include <sys/stat.h>
+| #endif
+| #ifdef STDC_HEADERS
+| # include <stdlib.h>
+| # include <stddef.h>
+| #else
+| # ifdef HAVE_STDLIB_H
+| #  include <stdlib.h>
+| # endif
+| #endif
+| #ifdef HAVE_STRING_H
+| # if !defined STDC_HEADERS && defined HAVE_MEMORY_H
+| #  include <memory.h>
+| # endif
+| # include <string.h>
+| #endif
+| #ifdef HAVE_STRINGS_H
+| # include <strings.h>
+| #endif
+| #ifdef HAVE_INTTYPES_H
+| # include <inttypes.h>
+| #endif
+| #ifdef HAVE_STDINT_H
+| # include <stdint.h>
+| #endif
+| #ifdef HAVE_UNISTD_H
+| # include <unistd.h>
+| #endif
+| int
+| main ()
+| {
+| if (sizeof ((size_t)))
+| 	    return 0;
+|   ;
+|   return 0;
+| }
+configure:4987: result: yes
+configure:5003: checking for bzero
+configure:5003: gcc -o conftest -g -O2   conftest.c  >&5
+conftest.c:59:6: warning: conflicting types for built-in function 'bzero' [enabled by default]
+configure:5003: $? = 0
+configure:5003: result: yes
+configure:5003: checking for gethostbyname
+configure:5003: gcc -o conftest -g -O2   conftest.c  >&5
+configure:5003: $? = 0
+configure:5003: result: yes
+configure:5003: checking for gettimeofday
+configure:5003: gcc -o conftest -g -O2   conftest.c  >&5
+configure:5003: $? = 0
+configure:5003: result: yes
+configure:5003: checking for inet_ntoa
+configure:5003: gcc -o conftest -g -O2   conftest.c  >&5
+configure:5003: $? = 0
+configure:5003: result: yes
+configure:5003: checking for memset
+configure:5003: gcc -o conftest -g -O2   conftest.c  >&5
+conftest.c:63:6: warning: conflicting types for built-in function 'memset' [enabled by default]
+configure:5003: $? = 0
+configure:5003: result: yes
+configure:5003: checking for select
+configure:5003: gcc -o conftest -g -O2   conftest.c  >&5
+configure:5003: $? = 0
+configure:5003: result: yes
+configure:5003: checking for socket
+configure:5003: gcc -o conftest -g -O2   conftest.c  >&5
+configure:5003: $? = 0
+configure:5003: result: yes
+configure:5003: checking for strcasecmp
+configure:5003: gcc -o conftest -g -O2   conftest.c  >&5
+conftest.c:66:6: warning: conflicting types for built-in function 'strcasecmp' [enabled by default]
+configure:5003: $? = 0
+configure:5003: result: yes
+configure:5003: checking for strrchr
+configure:5003: gcc -o conftest -g -O2   conftest.c  >&5
+conftest.c:67:6: warning: conflicting types for built-in function 'strrchr' [enabled by default]
+configure:5003: $? = 0
+configure:5003: result: yes
+configure:5014: checking for thread local storage (TLS) class
+configure:5042: gcc -c -g -O2  conftest.c >&5
+configure:5042: $? = 0
+configure:5054: result: __thread
+configure:5188: checking for boostlib >= 1.42
+configure:5257: g++ -c -g -O2 -std=gnu++0x  -I/usr/include conftest.cpp >&5
+configure:5257: $? = 0
+configure:5259: result: yes
+configure:5440: checking whether the Boost::Filesystem library is available
+configure:5464: g++ -c -g -O2 -std=gnu++0x  -I/usr/include conftest.cpp >&5
+configure:5464: $? = 0
+configure:5478: result: yes
+configure:5489: checking for exit in -lboost_filesystem-mt
+configure:5514: gcc -o conftest -g -O2  -I/usr/include  -L/usr/lib conftest.c -lboost_filesystem-mt    >&5
+conftest.c:55:6: warning: conflicting types for built-in function 'exit' [enabled by default]
+configure:5514: $? = 0
+configure:5524: result: yes
+configure:5648: checking build system type
+configure:5662: result: i686-pc-linux-gnu
+configure:5714: checking whether the Boost::System library is available
+configure:5738: g++ -c -g -O2 -std=gnu++0x  -I/usr/include conftest.cpp >&5
+configure:5738: $? = 0
+configure:5753: result: yes
+configure:5768: checking for exit in -lboost_system-mt
+configure:5793: gcc -o conftest -g -O2  -I/usr/include  -L/usr/lib conftest.c -lboost_system-mt   >&5
+conftest.c:56:6: warning: conflicting types for built-in function 'exit' [enabled by default]
+configure:5793: $? = 0
+configure:5803: result: yes
+configure:5955: checking whether the Boost::Thread library is available
+configure:5987: g++ -c -pthread -g -O2 -std=gnu++0x  -I/usr/include conftest.cpp >&5
+configure:5987: $? = 0
+configure:6002: result: yes
+configure:6031: checking for exit in -lboost_thread-mt
+configure:6056: gcc -o conftest -g -O2  -I/usr/include  -L/usr/lib conftest.c -lboost_thread-mt   >&5
+conftest.c:57:6: warning: conflicting types for built-in function 'exit' [enabled by default]
+configure:6056: $? = 0
+configure:6066: result: yes
+configure:6343: creating ./config.status
+
+## ---------------------- ##
+## Running config.status. ##
+## ---------------------- ##
+
+This file was extended by gateway config.status 1.0, which was
+generated by GNU Autoconf 2.68.  Invocation command line was
+
+  CONFIG_FILES    = 
+  CONFIG_HEADERS  = 
+  CONFIG_LINKS    = 
+  CONFIG_COMMANDS = 
+  $ ./config.status 
+
+on openflow
+
+config.status:914: creating Makefile
+config.status:914: creating src/Makefile
+config.status:914: creating src/include/Makefile
+config.status:914: creating src/lib/Makefile
+config.status:914: creating config.h
+config.status:1080: config.h is unchanged
+config.status:1128: executing depfiles commands
 
 ## ---------------- ##
 ## Cache variables. ##
 ## ---------------- ##
 
+ac_cv_build=i686-pc-linux-gnu
+ac_cv_c_compiler_gnu=yes
+ac_cv_c_inline=inline
+ac_cv_cxx_compiler_gnu=yes
 ac_cv_env_CCC_set=
 ac_cv_env_CCC_value=
 ac_cv_env_CC_set=
@@ -72,58 +697,114 @@ ac_cv_env_host_alias_set=
 ac_cv_env_host_alias_value=
 ac_cv_env_target_alias_set=
 ac_cv_env_target_alias_value=
+ac_cv_func_bzero=yes
+ac_cv_func_gethostbyname=yes
+ac_cv_func_gettimeofday=yes
+ac_cv_func_inet_ntoa=yes
+ac_cv_func_memset=yes
+ac_cv_func_select=yes
+ac_cv_func_socket=yes
+ac_cv_func_strcasecmp=yes
+ac_cv_func_strrchr=yes
+ac_cv_header_arpa_inet_h=yes
+ac_cv_header_inttypes_h=yes
+ac_cv_header_limits_h=yes
+ac_cv_header_memory_h=yes
+ac_cv_header_netdb_h=yes
+ac_cv_header_netinet_in_h=yes
+ac_cv_header_stdbool_h=yes
+ac_cv_header_stdc=yes
+ac_cv_header_stdint_h=yes
+ac_cv_header_stdlib_h=yes
+ac_cv_header_string_h=yes
+ac_cv_header_strings_h=yes
+ac_cv_header_sys_ioctl_h=yes
+ac_cv_header_sys_socket_h=yes
+ac_cv_header_sys_stat_h=yes
+ac_cv_header_sys_time_h=yes
+ac_cv_header_sys_types_h=yes
+ac_cv_header_syslog_h=yes
+ac_cv_header_unistd_h=yes
+ac_cv_lib_boost_filesystem_mt___exit=yes
+ac_cv_lib_boost_system_mt___exit=yes
+ac_cv_lib_boost_thread_mt___exit=yes
+ac_cv_objext=o
+ac_cv_path_EGREP='/bin/grep -E'
+ac_cv_path_GREP=/bin/grep
+ac_cv_path_install='/usr/bin/install -c'
+ac_cv_path_mkdir=/bin/mkdir
+ac_cv_prog_AWK=gawk
+ac_cv_prog_CPP='gcc -E'
+ac_cv_prog_ac_ct_CC=gcc
+ac_cv_prog_ac_ct_CXX=g++
+ac_cv_prog_ac_ct_RANLIB=ranlib
+ac_cv_prog_cc_c89=
+ac_cv_prog_cc_g=yes
+ac_cv_prog_cxx_g=yes
+ac_cv_prog_make_make_set=yes
+ac_cv_tls=__thread
+ac_cv_type__Bool=yes
+ac_cv_type_size_t=yes
+am_cv_CC_dependencies_compiler_type=gcc3
+am_cv_CXX_dependencies_compiler_type=gcc3
+ax_cv_boost_filesystem=yes
+ax_cv_boost_system=yes
+ax_cv_boost_thread=yes
+ax_cv_cxx_compile_cxx0x_cxx=yes
+ax_cv_cxx_compile_cxx0x_gxx=yes
+ax_cv_cxx_compile_cxx0x_native=no
 
 ## ----------------- ##
 ## Output variables. ##
 ## ----------------- ##
 
-ACLOCAL=''
-AMDEPBACKSLASH=''
-AMDEP_FALSE=''
+ACLOCAL='${SHELL} /home/txg/project/gateway/build-aux/missing --run aclocal-1.11'
+AMDEPBACKSLASH='\'
+AMDEP_FALSE='#'
 AMDEP_TRUE=''
-AMTAR=''
-AUTOCONF=''
-AUTOHEADER=''
-AUTOMAKE=''
-AWK=''
-BOOST_CPPFLAGS=''
-BOOST_FILESYSTEM_LIB=''
-BOOST_LDFLAGS=''
-BOOST_SYSTEM_LIB=''
-BOOST_THREAD_LIB=''
-CC=''
-CCDEPMODE=''
-CFLAGS=''
+AMTAR='$${TAR-tar}'
+AUTOCONF='${SHELL} /home/txg/project/gateway/build-aux/missing --run autoconf'
+AUTOHEADER='${SHELL} /home/txg/project/gateway/build-aux/missing --run autoheader'
+AUTOMAKE='${SHELL} /home/txg/project/gateway/build-aux/missing --run automake-1.11'
+AWK='gawk'
+BOOST_CPPFLAGS='-pthread -I/usr/include'
+BOOST_FILESYSTEM_LIB='-lboost_filesystem-mt'
+BOOST_LDFLAGS='-L/usr/lib'
+BOOST_SYSTEM_LIB='-lboost_system-mt'
+BOOST_THREAD_LIB='-lboost_thread-mt'
+CC='gcc'
+CCDEPMODE='depmode=gcc3'
+CFLAGS='-g -O2'
 COVERAGE_FALSE=''
-COVERAGE_TRUE=''
-CPP=''
+COVERAGE_TRUE='#'
+CPP='gcc -E'
 CPPFLAGS=''
-CXX=''
-CXXDEPMODE=''
-CXXFLAGS=''
-CYGPATH_W=''
-DEFS=''
-DEPDIR=''
+CXX='g++'
+CXXDEPMODE='depmode=gcc3'
+CXXFLAGS='-g -O2 -std=gnu++0x'
+CYGPATH_W='echo'
+DEFS='-DHAVE_CONFIG_H'
+DEPDIR='.deps'
 ECHO_C=''
 ECHO_N='-n'
 ECHO_T=''
-EGREP=''
+EGREP='/bin/grep -E'
 EXEEXT=''
-GREP=''
-INSTALL_DATA=''
-INSTALL_PROGRAM=''
-INSTALL_SCRIPT=''
-INSTALL_STRIP_PROGRAM=''
+GREP='/bin/grep'
+INSTALL_DATA='${INSTALL} -m 644'
+INSTALL_PROGRAM='${INSTALL}'
+INSTALL_SCRIPT='${INSTALL}'
+INSTALL_STRIP_PROGRAM='$(install_sh) -c -s'
 LDFLAGS=''
 LIBOBJS=''
 LIBS=''
 LTLIBOBJS=''
-MAKEINFO=''
-MKDIR_P=''
+MAKEINFO='${SHELL} /home/txg/project/gateway/build-aux/missing --run makeinfo'
+MKDIR_P='/bin/mkdir -p'
 NDEBUG_FALSE=''
-NDEBUG_TRUE=''
-OBJEXT=''
-PACKAGE=''
+NDEBUG_TRUE='#'
+OBJEXT='o'
+PACKAGE='gateway'
 PACKAGE_BUGREPORT='txgbuaa@gmail.com'
 PACKAGE_NAME='gateway'
 PACKAGE_STRING='gateway 1.0'
@@ -132,52 +813,52 @@ PACKAGE_URL=''
 PACKAGE_VERSION='1.0'
 PATH_SEPARATOR=':'
 PROFILING_FALSE=''
-PROFILING_TRUE=''
-RANLIB=''
+PROFILING_TRUE='#'
+RANLIB='ranlib'
 SET_MAKE=''
 SHELL='/bin/bash'
 STRIP=''
-VERSION=''
-ac_ct_CC=''
-ac_ct_CXX=''
+VERSION='1.0'
+ac_ct_CC='gcc'
+ac_ct_CXX='g++'
 am__EXEEXT_FALSE=''
-am__EXEEXT_TRUE=''
-am__fastdepCC_FALSE=''
+am__EXEEXT_TRUE='#'
+am__fastdepCC_FALSE='#'
 am__fastdepCC_TRUE=''
-am__fastdepCXX_FALSE=''
+am__fastdepCXX_FALSE='#'
 am__fastdepCXX_TRUE=''
-am__include=''
-am__isrc=''
-am__leading_dot=''
-am__nodep=''
+am__include='include'
+am__isrc=' -I$(srcdir)'
+am__leading_dot='.'
+am__nodep='_no'
 am__quote=''
-am__tar=''
-am__untar=''
+am__tar='$${TAR-tar} chof - "$$tardir"'
+am__untar='$${TAR-tar} xf -'
 bindir='${exec_prefix}/bin'
-build=''
+build='i686-pc-linux-gnu'
 build_alias=''
-build_cpu=''
-build_os=''
-build_vendor=''
+build_cpu='i686'
+build_os='linux-gnu'
+build_vendor='pc'
 datadir='${datarootdir}'
 datarootdir='${prefix}/share'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
 dvidir='${docdir}'
-exec_prefix='NONE'
+exec_prefix='${prefix}'
 host_alias=''
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
-install_sh=''
+install_sh='${SHELL} /home/txg/project/gateway/build-aux/install-sh'
 libdir='${exec_prefix}/lib'
 libexecdir='${exec_prefix}/libexec'
 localedir='${datarootdir}/locale'
 localstatedir='${prefix}/var'
 mandir='${datarootdir}/man'
-mkdir_p=''
+mkdir_p='/bin/mkdir -p'
 oldincludedir='/usr/include'
 pdfdir='${docdir}'
-prefix='NONE'
+prefix='/usr/local'
 program_transform_name='s,x,x,'
 psdir='${docdir}'
 sbindir='${exec_prefix}/sbin'
@@ -196,5 +877,46 @@ target_alias=''
 #define PACKAGE_STRING "gateway 1.0"
 #define PACKAGE_BUGREPORT "txgbuaa@gmail.com"
 #define PACKAGE_URL ""
+#define PACKAGE "gateway"
+#define VERSION "1.0"
+#define HAVE_STDCXX_0X /**/
+#define STDC_HEADERS 1
+#define HAVE_SYS_TYPES_H 1
+#define HAVE_SYS_STAT_H 1
+#define HAVE_STDLIB_H 1
+#define HAVE_STRING_H 1
+#define HAVE_MEMORY_H 1
+#define HAVE_STRINGS_H 1
+#define HAVE_INTTYPES_H 1
+#define HAVE_STDINT_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE_ARPA_INET_H 1
+#define HAVE_LIMITS_H 1
+#define HAVE_NETDB_H 1
+#define HAVE_NETINET_IN_H 1
+#define HAVE_STDINT_H 1
+#define HAVE_STDLIB_H 1
+#define HAVE_STRING_H 1
+#define HAVE_SYS_IOCTL_H 1
+#define HAVE_SYS_SOCKET_H 1
+#define HAVE_SYS_TIME_H 1
+#define HAVE_SYSLOG_H 1
+#define HAVE_UNISTD_H 1
+#define HAVE__BOOL 1
+#define HAVE_STDBOOL_H 1
+#define HAVE_BZERO 1
+#define HAVE_GETHOSTBYNAME 1
+#define HAVE_GETTIMEOFDAY 1
+#define HAVE_INET_NTOA 1
+#define HAVE_MEMSET 1
+#define HAVE_SELECT 1
+#define HAVE_SOCKET 1
+#define HAVE_STRCASECMP 1
+#define HAVE_STRRCHR 1
+#define TLS __thread
+#define HAVE_BOOST /**/
+#define HAVE_BOOST_FILESYSTEM /**/
+#define HAVE_BOOST_SYSTEM /**/
+#define HAVE_BOOST_THREAD /**/
 
-configure: exit 1
+configure: exit 0
