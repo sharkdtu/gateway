@@ -7,7 +7,7 @@ SUBDIRS = include lib
 bin_PROGRAMS = gateway 
 
 gateway_SOURCES = include/gateway.hh   \
-                  gateway/gateway.cc   \
+                  core/gateway.cc      \
                   gateway_main.cc
 
 gateway_CPPFLAGS = $(AM_CPPFLAGS)

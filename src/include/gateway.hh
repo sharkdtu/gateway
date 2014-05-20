@@ -3,6 +3,7 @@
 #include <boost/thread.hpp>
 
 #include "hash_map.hh"
+#include "configuration.hh"
 
 namespace rusv
 {
@@ -29,6 +30,7 @@ public:
 private:
 	hash_map<std::string, int> planetlab_to_sockfd;
 	int raw_sockfd;
+	Configuration* conf;
 	boost::thread_group tg;
 };
 
