@@ -13,7 +13,7 @@ AC_PROG_RANLIB
 AM_INIT_AUTOMAKE([foreign -Wall])
 
 # Checks for programs.
-# ${CXXFLAGS="-g -O0"}
+${CXXFLAGS="-g -O0"}
 AC_PROG_CXX
 AC_PROG_CC
 AC_PROG_CPP

@@ -14,6 +14,7 @@
 #include <net/if.h>
 #include <sys/select.h>
 #include <sys/time.h>
+#include <fcntl.h>
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -74,7 +75,54 @@ static int recv_timeout(int sockfd, int sec)
 	tv.tv_sec = sec;
 	tv.tv_usec = 0;
 
-	return (select(sockfd+1, &rset, NULL, NULL, &tv));
+	if (select(sockfd+1, &rset, NULL, NULL, &tv) > 0)
+		return 0;
+	else
+		return -1;
+}
+
+
+static int connect_timeout(int sockfd, const struct sockaddr* saptr, 
+		socklen_t salen, int nsec)
+{
+	int flags, n;
+	fd_set rset, wset;
+	struct timeval tval;
+
+	flags = fcntl(sockfd, F_GETFL, 0);
+	if(flags < 0)
+	{
+		perror("fcntl error");
+		exit(EXIT_FAILURE);
+	}
+	fcntl(sockfd, F_SETFL, flags | O_NONBLOCK);
+
+	if((n = connect(sockfd, saptr, salen)) < 0)
+	{
+		if(errno != EINPROGRESS)
+			return -1;
+
+		FD_ZERO(&rset);
+		FD_SET(sockfd, &rset);
+		wset = rset;
+		tval.tv_sec = nsec;
+		tval.tv_usec = 0;
+
+		if((n = select(sockfd + 1, &rset, &wset, NULL, 
+						nsec ? &tval : NULL)) == 0) 
+		{
+			errno = ETIMEDOUT;
+			return -1;
+		}
+
+		if(!FD_ISSET(sockfd, &rset) && !FD_ISSET(sockfd, &wset)) 
+		{
+			return -1;
+		}
+	}
+
+	fcntl(sockfd, F_SETFL, flags);
+	return 0;
 }
 
 Gateway::Gateway() : conf(Configuration::instance())
@@ -100,21 +148,27 @@ Gateway::Gateway() : conf(Configuration::instance())
 		planetlab_to_sockfd[planetlab_ip] = tcp_sockfd;
 
 		// attempt to connect to planetlab
+		lg.info("connecting to planetlab(%s)...", planetlab_ip.c_str());
 		if(connect_to_planetlab(planetlab_ip) < 0)
 		{
 			lg.err("connect planetlab(%s) error", planetlab_ip.c_str());
-			perror("connect error");
+			if(errno)
+				perror("connect error");
 		}
 		else
 		{
-			lg.dbg("connect to planetlab(%s) successed", planetlab_ip.c_str());
+			lg.info("connect to planetlab(%s) successed", planetlab_ip.c_str());
 		}
 
 		tg.create_thread(boost::bind(&Gateway::heartbeat, this, planetlab_ip));
+		lg.info("create thread for receiving packet from planetlab(%s)", planetlab_ip.c_str());
+
 		tg.create_thread(boost::bind(&Gateway::from_planetlab_to_router, this, planetlab_ip));
+		lg.info("create thread for heartbeating to planetlab(%s)", planetlab_ip.c_str());
 	}
 
 	tg.create_thread(boost::bind(&Gateway::from_router_to_planetlab, this));
+	lg.info("create thread for receiving packet from router");
 }
 
 Gateway::~Gateway()
@@ -131,12 +185,11 @@ int Gateway::connect_to_planetlab(string planetlab_ip)
 	to.sin_port = htons(planetlab_port);
 	if(inet_aton(planetlab_ip.c_str(), &to.sin_addr) < 0)
 	{
-		lg.err("inet_pton error for %s", planetlab_ip.c_str());
 		perror("inet_pton error");
 		exit(EXIT_FAILURE);
 	}
 
-	return connect(tcp_sockfd, (struct sockaddr*)&to, sizeof(to));
+	return connect_timeout(tcp_sockfd, (struct sockaddr*)&to, sizeof(to), CONN_TIMEOUT);
 }
 
 void Gateway::from_router_to_planetlab()
@@ -176,13 +229,13 @@ void Gateway::from_router_to_planetlab()
 
 void Gateway::from_planetlab_to_router(string planetlab_ip)
 {
-	int tcp_sockfd = planetlab_to_sockfd[planetlab_ip];
 	int sockfd = create_socket(RAW);
 
 	for(; ;)
 	{
 		char buffer[BUFSIZE];
 		int bytes_received;
+		int tcp_sockfd = planetlab_to_sockfd[planetlab_ip];
 		if((bytes_received = recv(tcp_sockfd, buffer, sizeof(buffer), 0)) < 0)
 		{
 			lg.err("receive packet from %s error", planetlab_ip.c_str());
@@ -242,7 +295,7 @@ void Gateway::heartbeat(string planetlab_ip)
 	char hello[10] = "hello";
 	for(; ;)
 	{
-		if(send(tcp_sockfd, hello, strlen(hello)+1, 0) < 0)
+		if(send(tcp_sockfd, hello, strlen(hello)+1, MSG_NOSIGNAL) < 0)
 		{
 			lg.err("send hello to planetlab(%s) failed", planetlab_ip.c_str());
 			perror("send error");
@@ -262,7 +315,7 @@ void Gateway::heartbeat(string planetlab_ip)
 		}
 		
 		int timeout = conf->get_timeout();
-		if(recv_timeout(tcp_sockfd, timeout) == 0)
+		if(recv_timeout(tcp_sockfd, timeout) < 0)
 		{
 			lg.err("receive hello timeout");
 			close(tcp_sockfd);
@@ -279,7 +332,7 @@ void Gateway::heartbeat(string planetlab_ip)
 			}
 		}
 
-		sleep(60);
+		sleep(HEARTBEAT_INTERVAL);
 	}
 }
 
