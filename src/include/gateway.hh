@@ -10,7 +10,7 @@ namespace rusv
 
 const unsigned int BUFSIZE = 65535; 
 const unsigned int CONN_TIMEOUT = 5;
-const unsigned int HEARTBEAT_INTERVAL = 60;
+const unsigned int HEARTBEAT_INTERVAL = 10;
 
 const unsigned short int planetlab_port = 8888;
 

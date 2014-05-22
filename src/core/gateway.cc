@@ -64,7 +64,7 @@ static int create_socket(sock_t st)
 	return sockfd;
 }
 
-static int recv_timeout(int sockfd, int sec)
+static int recv_timeout(int sockfd, void* buf, size_t len, int sec)
 {
 	fd_set rset;
 	struct timeval tv;
@@ -75,10 +75,13 @@ static int recv_timeout(int sockfd, int sec)
 	tv.tv_sec = sec;
 	tv.tv_usec = 0;
 
-	if (select(sockfd+1, &rset, NULL, NULL, &tv) > 0)
-		return 0;
+	if (select(sockfd+1, &rset, NULL, NULL, &tv) > 0) 
+		return recv(sockfd, buf, len, 0);
 	else
+	{
+		errno = ETIMEDOUT;
 		return -1;
+	}
 }
 
 
@@ -233,13 +236,26 @@ void Gateway::from_planetlab_to_router(string planetlab_ip)
 
 	for(; ;)
 	{
+		int tcp_sockfd = planetlab_to_sockfd[planetlab_ip];
 		char buffer[BUFSIZE];
 		int bytes_received;
-		int tcp_sockfd = planetlab_to_sockfd[planetlab_ip];
-		if((bytes_received = recv(tcp_sockfd, buffer, sizeof(buffer), 0)) < 0)
+		if((bytes_received = recv_timeout(tcp_sockfd, buffer, sizeof(buffer), HEARTBEAT_INTERVAL)) < 0)
 		{
 			lg.err("receive packet from %s error", planetlab_ip.c_str());
 			perror("recv error");
+
+			close(tcp_sockfd);
+			tcp_sockfd = create_socket(TCP);
+			planetlab_to_sockfd[planetlab_ip] = tcp_sockfd;
+
+			int times = 0;
+			while(connect_to_planetlab(planetlab_ip) < 0)
+			{
+				times++;
+				lg.err("connect planetlab(%s) error %d times", planetlab_ip.c_str(), times);
+				perror("connect error");
+				sleep(3);
+			}
 		}
 		else
 		{
@@ -291,45 +307,15 @@ void Gateway::from_planetlab_to_router(string planetlab_ip)
 
 void Gateway::heartbeat(string planetlab_ip)
 {
-	int tcp_sockfd = planetlab_to_sockfd[planetlab_ip];
 	char hello[10] = "hello";
 	for(; ;)
 	{
+		int tcp_sockfd = planetlab_to_sockfd[planetlab_ip];
+
 		if(send(tcp_sockfd, hello, strlen(hello)+1, MSG_NOSIGNAL) < 0)
 		{
 			lg.err("send hello to planetlab(%s) failed", planetlab_ip.c_str());
 			perror("send error");
-			close(tcp_sockfd);
-			tcp_sockfd = create_socket(TCP);
-			planetlab_to_sockfd[planetlab_ip] = tcp_sockfd;
-
-			int times = 0;
-			while(connect_to_planetlab(planetlab_ip) < 0)
-			{
-				times++;
-				lg.err("connect planetlab(%s) error %d times", planetlab_ip.c_str(), times);
-				perror("connect error");
-				sleep(3);
-			}
-			continue;
-		}
-		
-		int timeout = conf->get_timeout();
-		if(recv_timeout(tcp_sockfd, timeout) < 0)
-		{
-			lg.err("receive hello timeout");
-			close(tcp_sockfd);
-			tcp_sockfd = create_socket(TCP);
-			planetlab_to_sockfd[planetlab_ip] = tcp_sockfd;
-
-			int times = 0;
-			while(connect_to_planetlab(planetlab_ip) < 0)
-			{
-				times++;
-				lg.err("connect planetlab(%s) error %d times", planetlab_ip.c_str(), times);
-				perror("connect error");
-				sleep(3);
-			}
 		}
 
 		sleep(HEARTBEAT_INTERVAL);
