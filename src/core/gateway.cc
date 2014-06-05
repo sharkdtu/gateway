@@ -520,7 +520,7 @@ void Gateway::from_planetlab_to_router(const string& ifname)
 					if(sendto(raw_sockfd, tosend, bytes_tosend, 0, (struct sockaddr*)&to, sizeof(to)) < 0)
 						lg.err("send ip packet to %s error(%s)", conf->get_peer_ip(ifname).c_str(), strerror(errno));
 					else
-						lg.dbg("send ip packet %d bytes to %s successed", bytes_tosend, conf->get_peer_ip(ifname).c_str());
+						lg.dbg("send %d bytes data to %s successed", bytes_tosend, conf->get_peer_ip(ifname).c_str());
 
 					free(tosend);
 				}
