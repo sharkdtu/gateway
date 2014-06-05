@@ -23,17 +23,16 @@ void Configuration::init()
 	{
 		pt::ptree root;
 		pt::read_xml(CONF_FILE, root);
-		timeout = root.get<int>("gateway.timeout");
-		pt::ptree addr_groups = root.get_child("gateway.addr_groups");
-		BOOST_FOREACH(pt::ptree::value_type& v, addr_groups)
+		pt::ptree if_info = root.get_child("gateway.if_info");
+		BOOST_FOREACH(pt::ptree::value_type& v, if_info)
 		{
-			string peer_ip = v.second.get<string>("peer_ip");
-			string local_ip = v.second.get<string>("local_ip");
-			string planetlab_ip = v.second.get<string>("planetlab_ip");
-			string interface = v.second.get<string>("interface");
-			string peer_mac = v.second.get<string>("peer_mac");
-			peer_to_planetlab[peer_ip] = planetlab_ip;
-			peer_to_eth[peer_ip] = make_pair(interface, peer_mac);
+			Ifinfo* ifinfo = new Ifinfo;
+			ifinfo->ifname = v.second.get<string>("ifname");
+			ifinfo->ifip = v.second.get<string>("ifip");
+			ifinfo->peer_ip = v.second.get<string>("peer_ip");
+			ifinfo->peer_mac = v.second.get<string>("peer_mac");
+			ifinfo->planetlab_ip = v.second.get<string>("planetlab_ip");
+			ifname_map[ifinfo->ifname] = ifinfo;
 		}
 	}
 	else

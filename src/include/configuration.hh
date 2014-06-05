@@ -13,6 +13,15 @@ namespace rusv
 
 const std::string CONF_FILE = "conf/gateway.xml";
 
+struct Ifinfo
+{
+	std::string ifname;
+	std::string ifip;
+	std::string peer_ip;
+	std::string peer_mac;
+	std::string planetlab_ip;
+};
+
 class Configuration : boost::noncopyable
 {
 public:
@@ -21,34 +30,38 @@ public:
 		return theobject;
 	}
 
-	bool has_peer(std::string peer_ip)
+	bool has_ifname(const std::string& ifname)
 	{
-		if(peer_to_planetlab.find(peer_ip) != peer_to_planetlab.end())
+		if(ifname_map.find(ifname) != ifname_map.end())
 			return true;
 		else
 			return false;
 	}
 
-	std::pair<std::string, std::string>
-	get_eth(std::string peer_ip)
+	std::string get_peer_ip(const std::string& ifname)
 	{
-		return peer_to_eth[peer_ip];
+		return (ifname_map[ifname])->peer_ip;
 	}
 
-	std::string get_planetlab_ip(std::string peer_ip)
+	std::string get_peer_mac(const std::string& ifname)
 	{
-		return peer_to_planetlab[peer_ip];
+		return (ifname_map[ifname])->peer_mac;
 	}
 
-	hash_map<std::string, std::string>
-	get_all_planetlab_ip()
+	std::string get_ifip(const std::string& ifname)
 	{
-		return peer_to_planetlab;
+		return (ifname_map[ifname])->ifip;
 	}
 
-	int get_timeout()
+	std::string get_planetlab_ip(const std::string& ifname)
 	{
-		return timeout;
+		return (ifname_map[ifname])->planetlab_ip;
+	}
+
+	hash_map<std::string, Ifinfo*>
+	get_ifname_map()
+	{
+		return ifname_map;
 	}
 
 private:
@@ -61,9 +74,7 @@ private:
 
 private:
 	static Configuration* theobject;
-	hash_map<std::string, std::pair<std::string, std::string> > peer_to_eth;
-	hash_map<std::string, std::string> peer_to_planetlab;
-	int timeout;//unit(s)
+	hash_map<std::string, Ifinfo*> ifname_map;
 };
 
 } //namespace rusv

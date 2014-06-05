@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <gateway>
-	<addr_groups>
-		<addr_group>
-			<peer_ip>192.168.12.1</peer_ip>
-			<local_ip>192.168.12.2</local_ip>
+	<if_info>
+		<if>
+			<ifname>eth1</ifname>
+			<ifip>192.168.12.2</peer_ip>
+			<peer_ip>192.168.12.1</local_ip>
 			<planetlab_ip>211.68.70.40</planetlab_ip>
-			<interface>eth0</interface>
-			<peer_mac>00:02:db:07:22:4c</peer_mac>
-		</addr_group>
-
-		<addr_group>
-			<peer_ip>192.168.23.3</peer_ip>
-			<local_ip>192.168.23.2</local_ip>
-			<planetlab_ip>211.68.70.40</planetlab_ip>
-			<interface>eth1</interface>
-			<peer_mac>00:02:db:07:22:4d</peer_mac>
-		</addr_group>
-	</addr_groups>
-
-	<timeout>5</timeout>
+			<peer_mac>00:0C:29:D3:09:1A</peer_mac>
+		</if>
+	</if_info>
 </gateway>

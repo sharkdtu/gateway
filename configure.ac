@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.68])
+AC_PREREQ([2.63])
 AC_INIT([gateway], [1.0], [txgbuaa@gmail.com])
 AC_CONFIG_SRCDIR([src])
 AC_CONFIG_HEADERS([config.h])
@@ -42,13 +42,13 @@ AC_TYPE_SIZE_T
 # Checks for library functions.
 AC_CHECK_FUNCS([bzero gethostbyname gettimeofday inet_ntoa memset select socket strcasecmp strrchr])
 
-AX_TLS([], AC_MSG_ERROR([thread-local storage is not supported]))
+#AX_TLS([], AC_MSG_ERROR([thread-local storage is not supported]))
 CHECK_NDEBUG
 CHECK_PROFILING
 CHECK_COVERAGE
 
 # Checks for Boost libraries
-AX_BOOST_BASE([1.42])
+AX_BOOST_BASE([1.40])
 AX_BOOST_FILESYSTEM
 AX_BOOST_SYSTEM
 AX_BOOST_THREAD

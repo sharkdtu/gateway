@@ -1,0 +1,2 @@
+autoscan: warning: missing AC_CHECK_HEADERS([fcntl.h]) wanted by: 
+	src/core/gateway.cc:17

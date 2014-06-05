@@ -153,9 +153,11 @@ int main(int argc, char *argv[])
 
     init_log();
 
-    for(const string& s : verbosity)
-        set_verbosity(s.c_str());
-
+    for(int i = 0; i < verbosity.size(); i++)
+    {
+            string& s = verbosity[i];
+	    set_verbosity(s.c_str());
+    }
     lg.info("Starting %s (%s)", program_name, argv[0]);
 
 	Gateway gw;
