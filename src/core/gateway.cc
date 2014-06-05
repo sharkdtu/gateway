@@ -348,6 +348,7 @@ void Gateway::from_router_to_planetlab(const string& ifname)
 			if(send_non_block(tcp_sockfd, hello, sizeof(Pkt_header)) < 0)
 			{
 				lg.err("send hello to planetlab(%s) error(%s)", planetlab_ip.c_str(), strerror(errno));
+				continue;
 			}
 			else 
 			{
