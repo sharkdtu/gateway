@@ -2,8 +2,7 @@
 
 <gateway>
 	<if_info>
-		<if>
-			<ifname>eth1</ifname>
+		<if name="eth1">
 			<ifip>192.168.12.2</peer_ip>
 			<peer_ip>192.168.12.1</local_ip>
 			<planetlab_ip>211.68.70.40</planetlab_ip>
