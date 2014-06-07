@@ -173,74 +173,6 @@ static string get_iface_name(int fd, int ifindex)
 		exit(EXIT_FAILURE);
 	}
 	return string(ifr.ifr_name);
-}*/
-
-static ssize_t recvn_non_block(int sockfd, void* buffer, size_t n)
-{
-	size_t nleft = n;
-	ssize_t nrecv = 0;
-	char* ptr = (char*)buffer;
-	int first_recv = 0;
-	while(nleft > 0 )
-	{
-		if(first_recv != 0)
-		{
-			fd_set rset;
-			FD_ZERO(&rset);
-			FD_SET(sockfd, &rset);
-			if(select(sockfd+1, &rset, NULL, NULL, NULL) < 0)
-				return -1;
-		}
-
-		nrecv = recv(sockfd, ptr, nleft, 0);
-		if(first_recv == 0)
-			first_recv = 1;
-		if(nrecv < 0)
-		{
-			if(errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR)
-				nrecv = 0;
-			else
-				return -1;
-		}
-		else if(nrecv == 0)
-			break; // EOF
-		nleft -= nrecv;
-		ptr += nrecv;
-	}
-	return (n-nleft);
-}
-
-static ssize_t sendn_non_block(int sockfd, void* buffer, size_t n)
-{
-	size_t nleft = n;
-	ssize_t nsend = 0;
-	const char* ptr = (char*)buffer;
-	int first_send = 0;
-
-	while(nleft > 0)
-	{
-		if(first_send != 0)
-		{
-			fd_set wset;
-			FD_ZERO(&wset);
-			FD_SET(sockfd, &wset);
-			if(select(sockfd+1, NULL, &wset, NULL, NULL) < 0)
-				return -1;
-		}
-		nsend = send(sockfd, ptr, nleft, MSG_NOSIGNAL);
-		if(first_send == 0)
-			first_send = 1;
-		if(nsend <= 0)
-		{
-			if(nsend < 0 && (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR))
-				nsend = 0;
-			else
-				return -1;
-		}
-		nleft -= nsend;
-		ptr += nsend;
-	}
-	return (n - nleft);
 }
 
 static int send_non_block(int sockfd, void* buffer, size_t len)
@@ -253,6 +185,66 @@ static int send_non_block(int sockfd, void* buffer, size_t len)
 	if(send(sockfd, buffer, len, MSG_NOSIGNAL) < 0)
 		return -1;
 	return 0;
+}*/
+
+static ssize_t sendn_non_block(int sockfd, void* buffer, size_t n)
+{
+        size_t nleft = n;
+        ssize_t nsend = 0;
+        const char* ptr = (char*)buffer;
+        int first_send = 0;
+
+        while(nleft > 0)
+        {
+                if(first_send != 0)
+                {
+                        fd_set wset;
+                        FD_ZERO(&wset);
+                        FD_SET(sockfd, &wset);
+                        if(select(sockfd+1, NULL, &wset, NULL, NULL) < 0)
+                                return -1;
+                }
+                nsend = send(sockfd, ptr, nleft, MSG_NOSIGNAL);
+                if(first_send == 0)
+                        first_send = 1;
+                if(nsend <= 0)
+                {
+                        if(nsend < 0 && (errno == EAGAIN || errno == EWOULDBLOCK || errno == EINTR))
+                                nsend = 0;
+                        else
+                                return -1;
+                }
+                nleft -= nsend;
+                ptr += nsend;
+        }
+        return (n - nleft);
+}
+
+Recv_state Recv_buf::recv()
+{
+        char* ptr = bufptr;
+        int nleft = bufsize - nbyte;
+        int nrecv = ::recv(sockfd, ptr+nbyte, nleft, 0);
+        if(nrecv < 0)
+        {
+                return ERROR;
+        }
+        else if(nrecv == 0)
+        {
+                return CLOSED;
+        }
+        else
+        {
+                nbyte += nrecv;
+                if(nbyte == bufsize)
+                {
+                        return RECEIVED;
+                }
+                else
+                {
+                        return RECEIVING;
+                }
+        }
 }
 
 Gateway::Gateway() : conf(Configuration::instance())
@@ -381,9 +373,10 @@ void Gateway::from_router_to_planetlab(const string& ifname)
 	}
 
 	Pkt_header* hello = make_hello_packet(ifname);
-	while(sendn_non_block(tcp_sockfd, hello, sizeof(Pkt_header)) < sizeof(Pkt_header))
+	while(sendn_non_block(tcp_sockfd, hello, sizeof(Pkt_header)) < 0)
 	{
-		lg.err("send hello to planetlab(%s) error(%s)", planetlab_ip.c_str(), strerror(errno));
+		lg.err("send hello to planetlab(%s) error(%s)", 
+				planetlab_ip.c_str(), strerror(errno));
 		sleep(HEARTBEAT_INTERVAL);
 		tcp_sockfd = ifname_to_tcpfd[ifname];
 	}
@@ -412,10 +405,9 @@ void Gateway::from_router_to_planetlab(const string& ifname)
 		if(n == 0) 
 		{
 			//no data, send hello.
-			if(sendn_non_block(tcp_sockfd, hello, sizeof(Pkt_header)) < sizeof(Pkt_header))
+			if(sendn_non_block(tcp_sockfd, hello, sizeof(Pkt_header)) < 0)
 			{
 				lg.err("send hello to planetlab(%s) error(%s)", planetlab_ip.c_str(), strerror(errno));
-				continue;
 			}
 			else 
 			{
@@ -434,7 +426,7 @@ void Gateway::from_router_to_planetlab(const string& ifname)
 				long long int cur_time = time_msec();
 				if(cur_time - hello_timestamp >= HEARTBEAT_INTERVAL*1000)
 				{
-					if(sendn_non_block(tcp_sockfd, hello, sizeof(Pkt_header)) < sizeof(Pkt_header))
+					if(sendn_non_block(tcp_sockfd, hello, sizeof(Pkt_header)) < 0)
 					{
 						lg.err("send hello to planetlab(%s) error(%s)", planetlab_ip.c_str(), strerror(errno));
 					}
@@ -448,14 +440,14 @@ void Gateway::from_router_to_planetlab(const string& ifname)
 				int bytes_received = recvfrom(raw_sockfd, buffer, sizeof(buffer), 0, NULL, NULL);
 				if(bytes_received < 0)
 				{
-					lg.err("recvfrom() for planetlab(%s) error(%s)", planetlab_ip.c_str(), strerror(errno));
+					if(errno != EAGAIN && errno != EWOULDBLOCK)
+						lg.err("recvfrom() for planetlab(%s) error(%s)", planetlab_ip.c_str(), strerror(errno));
 					break;
 				}
 				else
 				{
 					Pkt_header* data = make_data_packet(ifname, buffer, bytes_received);
-					int bytes_tosend = sizeof(Pkt_header) + bytes_received;
-					if(sendn_non_block(tcp_sockfd, data, bytes_tosend) < bytes_tosend)
+					if(sendn_non_block(tcp_sockfd, data, sizeof(Pkt_header)+bytes_received) < 0)
 						lg.err("send data to planetlab(%s) error(%s)", planetlab_ip.c_str(), strerror(errno));
 					else
 						lg.dbg("send %d bytes data to planetlab(%s) successed", bytes_received, planetlab_ip.c_str());
@@ -471,10 +463,15 @@ void Gateway::from_planetlab_to_router(const string& ifname)
 {
 	int raw_sockfd = ifname_to_rawfd[ifname];
 	string planetlab_ip = conf->get_planetlab_ip(ifname);
+	Recv_buf* recvbuf = NULL;
 
 	for(; ;)
 	{
 		int tcp_sockfd = ifname_to_tcpfd[ifname];
+		if(recvbuf == NULL)
+		{
+			recvbuf = new Recv_buf(tcp_sockfd, sizeof(Pkt_header));
+		}
 
 		struct timeval tv;
 		tv.tv_sec = 2*HEARTBEAT_INTERVAL;
@@ -493,7 +490,7 @@ void Gateway::from_planetlab_to_router(const string& ifname)
 			tcp_sockfd = create_socket(TCP);
 			ifname_to_tcpfd[ifname] = tcp_sockfd;
 
-			lg.dbg("attempt to connect to planetlab(%s)", planetlab_ip.c_str());
+			lg.info("attempt to connect to planetlab(%s)", planetlab_ip.c_str());
 			int times = 0;
 			while(connect_to_planetlab(tcp_sockfd, planetlab_ip) < 0)
 			{
@@ -502,7 +499,7 @@ void Gateway::from_planetlab_to_router(const string& ifname)
 				sleep(5);
 			}
 
-			lg.dbg("connect to planetlab(%s) successed", planetlab_ip.c_str());
+			lg.info("connect to planetlab(%s) successed", planetlab_ip.c_str());
 		}
 		else if(n < 0)
 		{
@@ -527,64 +524,67 @@ void Gateway::from_planetlab_to_router(const string& ifname)
 			to.sll_halen = ETH_ALEN;
 			memcpy(to.sll_addr, peer_mac, ETH_ALEN);
 		
-		//	lg.dbg("%s", mac_to_str(peer_mac).c_str());
-		//	lg.dbg("address len: %d", sizeof(to));
-
-			Pkt_header* pkthdr = new Pkt_header;
 			while(1)
 			{
-				int bytes_received = ;
-				if(recvn_non_block(tcp_sockfd, pkthdr, sizeof(Pkt_header)) < sizeof(Pkt_header))
+				Recv_state recv_state = recvbuf->recv();
+				if(recv_state == ERROR || recv_state == CLOSED)
 				{
-					lg.err("recv from planetlab(%s) error(%s)", planetlab_ip.c_str(), strerror(errno));
-
-					close(tcp_sockfd);
-					tcp_sockfd = create_socket(TCP);
-					ifname_to_tcpfd[ifname] = tcp_sockfd;
-
-					lg.dbg("attempt to connect to planetlab(%s)", planetlab_ip.c_str());
-
-					int times = 0;
-					while(connect_to_planetlab(tcp_sockfd, planetlab_ip) < 0)
+					if (errno != EAGAIN && errno != EWOULDBLOCK)
 					{
-						times++;
-						lg.err("connect planetlab(%s) error(%s) %d times", planetlab_ip.c_str(), strerror(errno), times);
-						sleep(5);
-					}
+						lg.err("recv from planetlab(%s) error(%s)", planetlab_ip.c_str(), strerror(errno));
+						
+						delete recvbuf;
+						recvbuf = NULL;
 
-					lg.dbg("connect to planetlab(%s) successed", planetlab_ip.c_str());
+						close(tcp_sockfd);
+						tcp_sockfd = create_socket(TCP);
+						ifname_to_tcpfd[ifname] = tcp_sockfd;
+
+						lg.info("attempt to connect to planetlab(%s)", planetlab_ip.c_str());
+						int times = 0;
+						while(connect_to_planetlab(tcp_sockfd, planetlab_ip) < 0)
+						{
+							times++;
+							lg.err("connect planetlab(%s) error(%s) %d times", planetlab_ip.c_str(), strerror(errno), times);
+							sleep(5);
+						}
+						lg.info("connect to planetlab(%s) successed", planetlab_ip.c_str());
+					}
 
 					break;
 				}
-				else
+				if(recv_state == RECEIVING)
 				{
-					if(pkthdr->type == HELLO)
-					{
-						lg.dbg("recv hello from planetlab(%s) successed", planetlab_ip.c_str());
-						continue;
-					}
-
-					int bytes_tosend = pkthdr->datalen;
-
-					char* tosend = (char*)malloc(bytes_tosend);
-					if(recvn_non_block(tcp_sockfd, tosend, bytes_tosend) < bytes_tosend)
-					{
-						lg.err("recv from planetlab(%s) data error(%s)", planetlab_ip.c_str(), strerror(errno));
-						continue;
-					}
-
-					lg.dbg("recv %d bytes data from planetlab(%s)", bytes_tosend, planetlab_ip.c_str());
-
-					if(sendto(raw_sockfd, tosend, bytes_tosend, 0, (struct sockaddr*)&to, sizeof(to)) < 0)
-						lg.err("send ip packet to %s error(%s)", conf->get_peer_ip(ifname).c_str(), strerror(errno));
-					else
-						lg.dbg("send %d bytes data to %s successed", bytes_tosend, conf->get_peer_ip(ifname).c_str());
-
-					free(tosend);
+					break;
 				}
-			}
 
-			delete pkthdr;
+				Pkt_header* pkthdr = (Pkt_header*)recvbuf->get_bufptr();
+				if(pkthdr->type == HELLO)
+				{
+					lg.dbg("recv hello from planetlab(%s) successed", planetlab_ip.c_str());
+					recvbuf->reset(sizeof(Pkt_header));
+					continue;
+				}
+
+				if(recvbuf->get_bufsize() > sizeof(Pkt_header))
+				{
+					int bytes_tosend = pkthdr->datalen;
+					if(sendto(raw_sockfd, recvbuf->get_bufptr()+sizeof(Pkt_header), bytes_tosend, 0, (struct sockaddr*)&to, sizeof(to)) < 0)
+					{
+						lg.err("send data to %s error(%s)", conf->get_peer_ip(ifname).c_str(), strerror(errno));
+					}
+					else
+					{
+						lg.dbg("send %d bytes data to %s successed", bytes_tosend, conf->get_peer_ip(ifname).c_str());
+					}
+
+					recvbuf->reset(sizeof(Pkt_header));
+					continue;
+				}
+
+				int pktlen = sizeof(Pkt_header) + pkthdr->datalen;
+				recvbuf->realloc(pktlen);
+			}
 		}
 	}
 }
